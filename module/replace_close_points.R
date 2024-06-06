@@ -1,5 +1,5 @@
 # Function to replace close points
-replace_close_points <- function(points, alpha=1e-8) {
+replace_close_points <- function(points, alpha=1e-06) {
   points <- sort(points)
   points[1] <- 0
   points[length(points)] <- 1
