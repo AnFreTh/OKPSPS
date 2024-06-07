@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="pso_header.png" width="400"/>
+  <img src="pso_header.png" width="600"/>
 
 
 # Enhancing Adaptive Spline Regression
