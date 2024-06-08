@@ -72,7 +72,7 @@ plot_multivariate_splines <-
       y <- predict(model, newdata)
       
       plot_data <- data.frame(x = x, y = y)
-
+      
       
       # Generate new data for knot prediction
       knot_newdata <-

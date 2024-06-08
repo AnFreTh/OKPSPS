@@ -25,48 +25,62 @@ loss_func_1dim <- function(params, data, method, alpha) {
 
 
 
-
-# Loss function based on GCV of a GAM for multiple splines
-loss_func_multi <- function(params, data, n_knots, alpha, method) {
-  knots <- list()
-  start_idx <- 1
-  num_dims <- length(n_knots)
-  
-  for (i in seq_len(num_dims)) {
-    end_idx <- start_idx + n_knots[i] - 1
-    knots[[i]] <-
-      replace_close_points(params[start_idx:end_idx], alpha)
-    start_idx <- end_idx + 1
-  }
-  
-  sp <- params[(start_idx):length(params)]
-  
-  formula_str <- "y ~ -1"
-  for (i in seq_len(num_dims)) {
+# Updated loss function to include smoothing parameters in the optimization
+loss_func_multidim <-
+  function(params,
+           data,
+           method,
+           alpha,
+           bs_list,
+           smooth_terms,
+           n_knots) {
+    num_smooth_terms <- length(smooth_terms)
+    sp_list <-
+      params[(num_smooth_terms * n_knots + 1):length(params)]
+    idx <- length(params) - num_smooth_terms
+    knots_list <- params[1:idx]
+    knots_list <-
+      split(knots_list[1:(num_smooth_terms * n_knots)], rep(1:num_smooth_terms, each = n_knots))
+    
+    
+    for (i in 1:length(knots_list)) {
+      knots_list[[i]] <-
+        replace_close_points(knots_list[[i]], alpha, data, var_name = smooth_terms[[i]])
+    }
+    
+    
+    formula_parts <- sapply(1:length(smooth_terms), function(i) {
+      paste0(
+        "s(",
+        smooth_terms[[i]],
+        ", k = ",
+        length(knots_list[[i]]),
+        ", sp = ",
+        sp_list[i],
+        ", bs = '",
+        bs_list[[i]],
+        "')"
+      )
+    })
+    
     formula_str <-
-      paste0(formula_str,
-             " + s(x",
-             i,
-             ", k = length(knots[[",
-             i,
-             "]]), sp = sp[",
-             i,
-             "], bs = 'cr')")
+      paste("y ~", paste(formula_parts, collapse = " + "))
+    
+    knots <-
+      setNames(lapply(knots_list, function(k)
+        k), smooth_terms)
+    
+    model <- gam(
+      as.formula(formula_str),
+      knots = knots,
+      data = data,
+      method = method
+    )
+    
+    
+    gcv <- model$gcv.ubre[[1]]
+    if (is.infinite(gcv) || is.nan(gcv)) {
+      gcv <- 100000
+    }
+    return(gcv)
   }
-  
-  formula <- as.formula(formula_str)
-  
-  model <- gam(
-    formula,
-    data = data,
-    knots = setNames(knots, paste0("x", seq_len(num_dims))),
-    method = method
-  )
-  
-  gcv <- model$gcv.ubre[[1]]
-  if (is.infinite(gcv) || is.nan(gcv)) {
-    gcv <- 100000
-  }
-  
-  return(gcv)
-}
