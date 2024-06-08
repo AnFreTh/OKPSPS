@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="pso_header.png" width="600"/>
-
+<img src="pso_header.png" width="600"/>
+</div>
 
 # Enhancing Adaptive Spline Regression
 
@@ -24,5 +24,53 @@ This repository contains R code for the paper:
 
 Ensure you have the following R packages installed:
 
+
 ```R
 install.packages(c("ggplot2", "dplyr", "mgcv", "pso", "purrr", "tibble", "gridExtra"))
+```
+
+
+## Usage
+Simply fit a gam with mgcv on any dataframe.
+Then pass the gam to the provided function and optimize with respect to your preferred criterion. E.g. "REML" for the Restricted Maximum Likelihood criterion, "GCV.Cp" for the generalized cross validation or any other method specified in the mgcv packages 'gam' function.
+
+### Example Script
+
+Below is an example script demonstrating how to use the provided functions to fit a GAM model using PSO for optimal knot placement and smoothing parameter selection.
+
+```R
+# Load necessary libraries
+library(mgcv)
+library(pso)
+
+# Source required functions
+source("data_simulation/functions.R")
+source("module/ok_gam.R")
+```
+Get your data in a data.frame, just like you would when you fit a normal gam
+```R
+# Define the initial gam model
+initial_gam_model <- gam(
+  y ~ s(x1, bs = "cr") + s(x2, bs = "cr") + s(x3, bs = "cr"),
+  data = data,
+  method = "GCV.Cp"
+)
+
+# Call the fit_gam_pso function
+result <- fit_gam_pso_multidim(
+  gam_model = initial_gam_model,
+  data = data,
+  n_knots = 15,
+  alpha = 1e-07,
+  method = "GCV.Cp",
+)
+```
+This returns a dictionary with knot locations, the optimized gam model and the smoothing parameters.
+
+```R
+# Plot the fitted model
+par(mfrow = c(2, 1))
+plot(result$model, pages = 1)
+```
+
+
