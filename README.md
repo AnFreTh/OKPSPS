@@ -19,6 +19,29 @@ In the optimization process, knots are optimized as demonstrated in the figure b
 <img src="knot_locations_iterations.png" width="600"/>
 </div>
 
+## Comparison to default and other optimization methods
+Below is a simple data generating function with a sharp jump. All models are fit with the same number of knots and the same smoothing parameter optimization criterion, GCV. "Equidistant" represents the default fit from a gam within the mgcv package.
+Nelder-Mead represents optimization of GCV with respect to knot locations and smoothing parameters over 20.000 iterations (until convergence). OK-PSO describes the presented methods optimization over 100 iterations. The red line denotes the true data generating process. 
+
+<div style="display: flex; justify-content: space-around; align-items: center;">
+
+  <div style="text-align: center;">
+    <h3>Equidistant</h3>
+    <img src="equidistant.png" alt="Plot 1" style="width: 300px;"/>
+  </div>
+
+  <div style="text-align: center;">
+    <h3>Nelder-Mead</h3>
+    <img src="Nelder-Mead.png" alt="Plot 2" style="width: 300px;"/>
+  </div>
+
+  <div style="text-align: center;">
+    <h3>OK-PSO</h3>
+    <img src="PSO.png" alt="Plot 3" style="width: 300px;"/>
+  </div>
+
+</div>
+
 
 ## Repository Structure
 
