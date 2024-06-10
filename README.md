@@ -25,22 +25,23 @@ Nelder-Mead represents optimization of GCV with respect to knot locations and sm
 
 <div style="display: flex; justify-content: space-around; align-items: center;">
 
-  <div style="text-align: center;">
+  <div style="text-align: center; margin-right: 10px;">
     <h3>Equidistant</h3>
-    <img src="equidistant.png" alt="Plot 1" style="width: 250px;"/>
+    <img src="equidistant.png" alt="Equidistant" style="width: 250px;"/>
   </div>
 
-  <div style="text-align: center;">
+  <div style="text-align: center; margin-right: 10px;">
     <h3>Nelder-Mead</h3>
-    <img src="Nelder-Mead.png" alt="Plot 2" style="width: 250px;"/>
+    <img src="Nelder-Mead.png" alt="Nelder-Mead" style="width: 250px;"/>
   </div>
 
   <div style="text-align: center;">
     <h3>OK-PSO</h3>
-    <img src="PSO.png" alt="Plot 3" style="width: 250px;"/>
+    <img src="PSO.png" alt="OK-PSO" style="width: 250px;"/>
   </div>
 
 </div>
+
 
 
 ## Repository Structure
