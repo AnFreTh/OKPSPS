@@ -1,6 +1,5 @@
 # Loss function based on GCV of a GAM
 source("module/replace_close_points.R")
-library(torch)
 
 loss_func_1dim <-
   function(params,
