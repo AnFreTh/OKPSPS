@@ -6,7 +6,7 @@ source("module/ok_gam.R")
 
 #start by simulating some univariate data
 
-set.seed(1234)
+set.seed(101)
 n <- 1000
 x1 <- runif(n,-0.5, 1)
 
@@ -105,3 +105,4 @@ lines(x_seq,
       col = "red",
       lwd = 2,
       lty = 2)
+
