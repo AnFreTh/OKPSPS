@@ -74,11 +74,11 @@ Since gradient based optimziation cannot merge and unmerge knots, we did not all
 
 <table>
   <tr>
-    <td style="width: 50%; padding-right: 20px;">
+    <td style="width: 40%; padding-right: 20px;">
       The reasons for gradient-based methods performing comparably poorly are that GCV and REML tend to have local minima, which can lead to gradient-based methods getting stuck in these. PSO, on the other hand, is quite good at escaping these minima. GCV of a univariate model with a fixed smoothing parameter shows this for the position of only the two center knots.
     </td>
-    <td style="width: 50%; text-align: center;">
-      <img src="images/gcv_over_knots.png" alt="OK-PSO" style="width: 90%;"/>
+    <td style="width: 60%; text-align: center;">
+      <img src="images/gcv_over_knots.png" alt="OK-PSO" style="width: 100%;"/>
     </td>
   </tr>
 </table>
