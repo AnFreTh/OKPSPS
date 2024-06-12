@@ -49,10 +49,10 @@ While for univariate examples, all optimization algorithms perform similarly, fo
     <th>OK-PSO</th>
   </tr>
   <tr>
-    <td><img src="images/equidistant_multi.png" alt="Equidistant" style="width: 250px;"/></td>
-    <td><img src="images/gradient-multi-drift.png" alt="Gradient" style="width: 250px;"/></td>
-    <td><img src="images/Nelder-Mead-multi-merge.png" alt="Nelder-Mead" style="width: 250px;"/></td>
-    <td><img src="images/PSO-multi-merge.png" alt="OK-PSO" style="width: 250px;"/></td>
+    <td><img src="images/equidistant-multi.png" alt="Equidistant" style="width: 200px;"/></td>
+    <td><img src="images/gradient-multi-drift.png" alt="Gradient" style="width: 200px;"/></td>
+    <td><img src="images/Nelder-Mead-multi-merge.png" alt="Nelder-Mead" style="width: 200px;"/></td>
+    <td><img src="images/PSO-multi-merge.png" alt="OK-PSO" style="width: 200px;"/></td>
   </tr>
 </table>
 
@@ -66,8 +66,8 @@ Since gradient based optimziation cannot merge and unmerge knots, we did not all
     <th>OK-PSO</th>
   </tr>
   <tr>
-    <td><img src="images/Nelder-Mead-multi-drift.png" alt="Nelder-Mead" style="width: 450px;"/></td>
-    <td><img src="images/PSO-multi-drift.png" alt="OK-PSO" style="width: 450px;"/></td>
+    <td><img src="images/Nelder-Mead-multi-drift.png" alt="Nelder-Mead" style="width: 350px;"/></td>
+    <td><img src="images/PSO-multi-drift.png" alt="OK-PSO" style="width: 350px;"/></td>
   </tr>
 </table>
 
