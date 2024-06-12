@@ -1,6 +1,7 @@
 # Function to replace close points
 replace_close_points <-
   function(points, alpha = 1e-06, data, var_name) {
+
     points <- sort(points)
     points <- unique(points)
     result <- numeric(0)
@@ -28,3 +29,15 @@ replace_close_points <-
     result[length(result)] <- var_max
     return(result)
   }
+
+
+drift_apart_knots <- function(knots, alpha) {
+  for (i in 2:length(knots)) {
+    if (abs(knots[i] - knots[i - 1]) < alpha) {
+      mid_point <- (knots[i] + knots[i - 1]) / 2
+      knots[i - 1] <- mid_point - alpha / 2
+      knots[i] <- mid_point + alpha / 2
+    }
+  }
+  return(knots)
+}
