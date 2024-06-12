@@ -72,3 +72,8 @@ f10 <- function(x){
   y <- 2*x
   return(y)
 }
+
+f11 <- function(x){
+  y <- ifelse(x < 0.0, -2, 2)
+  return(y)
+}
