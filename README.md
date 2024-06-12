@@ -49,10 +49,10 @@ While for univariate examples, all optimization algorithms perform similarly, fo
     <th>OK-PSO</th>
   </tr>
   <tr>
-    <td><img src="images/equidistant-multi.png" alt="Equidistant" style="width: 200px;"/></td>
-    <td><img src="images/gradient-multi-drift.png" alt="Gradient" style="width: 200px;"/></td>
-    <td><img src="images/Nelder-Mead-multi-merge.png" alt="Nelder-Mead" style="width: 200px;"/></td>
-    <td><img src="images/pso-multi-merge.png" alt="OK-PSO" style="width: 200px;"/></td>
+    <td><img src="images/equidistant-multi.png" alt="Equidistant" style="width: 250px;"/></td>
+    <td><img src="images/gradient-multi-drift.png" alt="Gradient" style="width: 250px;"/></td>
+    <td><img src="images/Nelder-Mead-multi-merge.png" alt="Nelder-Mead" style="width: 250px;"/></td>
+    <td><img src="images/pso-multi-merge.png" alt="OK-PSO" style="width: 250px;"/></td>
   </tr>
 </table>
 
@@ -66,21 +66,20 @@ Since gradient based optimziation cannot merge and unmerge knots, we did not all
     <th>OK-PSO</th>
   </tr>
   <tr>
-    <td><img src="images/Nelder-Mead-multi-drift.png" alt="Nelder-Mead" style="width: 400px;"/></td>
-    <td><img src="images/pso-multi-drift.png" alt="OK-PSO" style="width: 400px;"/></td>
+    <td><img src="images/Nelder-Mead-multi-drift.png" alt="Nelder-Mead" style="width: 350px;"/></td>
+    <td><img src="images/pso-multi-drift.png" alt="OK-PSO" style="width: 350px;"/></td>
   </tr>
 </table>
 
 
 
 
-<table style="width:100%">
+<table>
   <tr>
-    <td style="width:60%; padding-right: 20px;">
+    <td style="width: 300px;">
       The reasons for gradient-based methods performing comparably poorly are that GCV and REML tend to have local minima, which can lead to gradient-based methods getting stuck in these. PSO, on the other hand, is quite good at escaping these minima. GCV of a univariate model with a fixed smoothing parameter shows this for the position of only the two center knots.
     </td>
-    <td style="width:40%;">
-      <img src="images/gcv_over_knots.png" width="300"/>
+    <td><img src="images/gcv_over_knots.png" alt="OK-PSO" style="width: 400px;"/></td>
     </td>
   </tr>
 </table>
