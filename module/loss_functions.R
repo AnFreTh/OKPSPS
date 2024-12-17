@@ -42,7 +42,8 @@ loss_func_multidim <-
            bs_list,
            smooth_terms,
            n_knots,
-           merge = TRUE) {
+           merge = TRUE,
+           multiplicity = FALSE) {
     num_smooth_terms <- length(smooth_terms)
     sp_list <-
       params[(num_smooth_terms * n_knots + 1):length(params)]
@@ -58,7 +59,7 @@ loss_func_multidim <-
     for (i in 1:length(knots_list)) {
       if (merge == TRUE) {
         knots_list[[i]] <-
-          replace_close_points(knots_list[[i]], alpha, data, var_name = smooth_terms[[i]])
+          replace_close_points(knots_list[[i]], alpha, data, var_name = smooth_terms[[i]], multiplicity)
       }
       else{
         knots_list[[i]] <- drift_apart_knots(knots_list[[i]], alpha)

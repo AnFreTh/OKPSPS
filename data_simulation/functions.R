@@ -64,16 +64,16 @@ f8 <- function(x){
 }
 
 f9 <- function(x){
-  y <- -1*x
+  y <- -x
   return(y)
 }
 
 f10 <- function(x){
-  y <- 2*x
+  y <- ifelse(x < 0.0, -2, 2)
   return(y)
 }
 
 f11 <- function(x){
-  y <- ifelse(x < 0.0, -2, 2)
+  y <- ifelse(x < 0.0, -1, 1)
   return(y)
 }

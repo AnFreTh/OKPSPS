@@ -17,7 +17,9 @@ fit_gam_pso <-
            c1 = .5 + log(2),
            c2 = .5 + log(2),
            lambda_max = 5000,
-           merge = TRUE) {
+           merge = TRUE,
+           multiplicity = FALSE,
+           m = 3) {
     # Extract the necessary parameters from the gam model
     smooth_terms <-
       lapply(gam_model$smooth, function(smooth_term)
@@ -25,6 +27,11 @@ fit_gam_pso <-
     bs_list <-
       sapply(gam_model$smooth, function(smooth_term)
         strsplit(class(smooth_term)[1], "\\.")[[1]][1])
+    
+    if (multiplicity && !all(bs_list == "MuSP")) {
+      stop("When multiplicity is TRUE, all smooth terms must use the 'MuSP' class.")
+    }
+    
     sp_list <- gam_model$sp
     
     
@@ -79,7 +86,8 @@ fit_gam_pso <-
       bs_list = bs_list,
       smooth_terms = smooth_terms,
       n_knots = n_knots,
-      merge = merge
+      merge = merge,
+      multiplicity = multiplicity
     )
     
     params <- result$par
@@ -93,7 +101,7 @@ fit_gam_pso <-
     
     for (i in 1:length(knots_list)) {
       knots_list[[i]] <-
-        replace_close_points(knots_list[[i]], alpha, data, smooth_terms[[i]]) # Include boundary knots
+        replace_close_points(knots_list[[i]], alpha, data, smooth_terms[[i]], multiplicity, m) # Include boundary knots
     }
     
     
@@ -142,10 +150,12 @@ fit_gam_optim <-
            n_knots = 12,
            alpha = 1e-07,
            smoothing_method = "GCV.Cp",
-           method = "Nelder-Mead",
+           method = "L-BFGS-B",
            max_iterations = 5000,
            lambda_max = 5000,
-           merge = TRUE) {
+           merge = TRUE,
+           multiplicity = FALSE,
+           m = 3) {
     # Extract the necessary parameters from the gam model
     smooth_terms <-
       lapply(gam_model$smooth, function(smooth_term)
@@ -154,6 +164,10 @@ fit_gam_optim <-
       sapply(gam_model$smooth, function(smooth_term)
         strsplit(class(smooth_term)[1], "\\.")[[1]][1])
     sp_list <- gam_model$sp
+    
+    if (multiplicity && !all(bs_list == "MuSP")) {
+      stop("When multiplicity is TRUE, all smooth terms must use the 'MuSP' class.")
+    }
     
     
     
@@ -191,6 +205,8 @@ fit_gam_optim <-
       par = initial_params,
       fn = loss_func_multidim,
       method = method,
+      lower = search_space[, 1],
+      upper = search_space[, 2],
       control = list(maxit = max_iterations),
       data = data,
       smoothing_method = smoothing_method,
@@ -198,7 +214,8 @@ fit_gam_optim <-
       bs_list = bs_list,
       smooth_terms = smooth_terms,
       n_knots = n_knots,
-      merge = merge
+      merge = merge,
+      multiplicity = multiplicity
     )
     
     params <- result$par
@@ -212,9 +229,8 @@ fit_gam_optim <-
     
     for (i in 1:length(knots_list)) {
       knots_list[[i]] <-
-        replace_close_points(knots_list[[i]], alpha, data, smooth_terms[[i]]) # Include boundary knots
+        replace_close_points(knots_list[[i]], alpha, data, smooth_terms[[i]], multiplicity, m) # Include boundary knots
     }
-    
     
     
     
@@ -238,6 +254,7 @@ fit_gam_optim <-
     knots <-
       setNames(lapply(knots_list, function(k)
         k), smooth_terms)
+    
     model <- gam(
       as.formula(formula_str),
       knots = knots,
@@ -271,7 +288,9 @@ fit_gam_gradient <-
            best_loss = Inf,
            no_improvement_count = 0,
            lr_patience = 50,
-           lr_factor=0.9) {
+           lr_factor = 0.9,
+           multiplicity = FALSE,
+           m = 3) {
     # Extract the necessary parameters from the gam model
     smooth_terms <-
       lapply(gam_model$smooth, function(smooth_term)
@@ -280,6 +299,10 @@ fit_gam_gradient <-
       sapply(gam_model$smooth, function(smooth_term)
         strsplit(class(smooth_term)[1], "\\.")[[1]][1])
     sp_list <- gam_model$sp
+    
+    if (multiplicity && !all(bs_list == "MuSP")) {
+      stop("When multiplicity is TRUE, all smooth terms must use the 'MuSP' class.")
+    }
     
     
     
@@ -396,7 +419,7 @@ fit_gam_gradient <-
     for (i in 1:length(knots_list)) {
       if (merge == TRUE) {
         knots_list[[i]] <-
-          replace_close_points(knots_list[[i]], alpha, data, var_name = smooth_terms[[i]])
+          replace_close_points(knots_list[[i]], alpha, data, var_name = smooth_terms[[i]], multiplicity, m)
       }
       else{
         knots_list[[i]] <- drift_apart_knots(knots_list[[i]], alpha)
